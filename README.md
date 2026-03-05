@@ -71,4 +71,4 @@ GitHub Actions workflow: `.github/workflows/ci.yml`
 4. Задать переменные окружения: `DB_URL`, `DB_USER`, `DB_PASSWORD`, `JWT_SECRET`, `REDIS_HOST`, `RABBIT_HOST`.
 
 ### Ссылка на сервис
-- _Добавьте ссылку после деплоя (например: `https://your-app.onrender.com`)_.
+- _http://127.0.0.1:8080/swagger_.
