@@ -12,8 +12,8 @@ import com.example.models.OrderStatus
 import com.example.queue.OrderEventPublisher
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
-import org.jetbrains.exposed.sql.SqlExpressionBuilder.and
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
+import org.jetbrains.exposed.sql.andWhere
 import org.jetbrains.exposed.sql.insert
 import org.jetbrains.exposed.sql.selectAll
 import org.jetbrains.exposed.sql.transactions.transaction
@@ -107,7 +107,8 @@ class OrderService(
 
     private fun getOrderInternal(orderId: Int, userId: Int): OrderResponse {
         val order = Orders.selectAll()
-            .where { (Orders.id eq orderId) and (Orders.userId eq userId) }
+            .where { Orders.id eq orderId }
+            .andWhere { Orders.userId eq userId }
             .singleOrNull() ?: throw NotFoundException("Order not found")
 
         val items = OrderItems.selectAll().where { OrderItems.orderId eq orderId }.map {
