@@ -36,18 +36,19 @@ docker-compose up --build
 ```
 
 
-## Ошибка подключения к PostgreSQL (`role "shop" does not exist`)
-Если вы запускаете сервис не через `docker-compose`, в локальном PostgreSQL часто нет пользователя `shop`.
+## Локальные параметры БД (по вашему запросу)
+Используйте эти параметры:
+- DB: `shop`
+- User: `postgres` (можно `DB_USER` или `DB_USERNAME`)
+- Password: `123522`
 
-Используйте переменные окружения перед запуском:
+Запуск с переменными окружения:
 ```bash
-export DB_URL=jdbc:postgresql://localhost:5432/postgres
+export DB_URL=jdbc:postgresql://localhost:5432/shop
 export DB_USER=postgres
-export DB_PASSWORD=postgres
+export DB_PASSWORD=123522
 ./gradlew run
 ```
-
-Либо создайте пользователя/БД `shop`, как в `docker-compose.yml`.
 
 ## Тесты
 ```bash

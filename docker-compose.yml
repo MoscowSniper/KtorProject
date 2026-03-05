@@ -6,8 +6,8 @@ services:
       - "8080:8080"
     environment:
       DB_URL: jdbc:postgresql://postgres:5432/shop
-      DB_USER: shop
-      DB_PASSWORD: shop
+      DB_USER: postgres
+      DB_PASSWORD: 123522
       REDIS_HOST: redis
       RABBIT_HOST: rabbitmq
       JWT_SECRET: super-secret
@@ -20,8 +20,8 @@ services:
     image: postgres:15-alpine
     environment:
       POSTGRES_DB: shop
-      POSTGRES_USER: shop
-      POSTGRES_PASSWORD: shop
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 123522
     ports:
       - "5432:5432"
 

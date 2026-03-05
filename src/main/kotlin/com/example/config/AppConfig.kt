@@ -15,10 +15,11 @@ data class AppConfig(
             envOrNull("DB_URL"),
             envOrNull("JDBC_DATABASE_URL"),
             envOrNull("DATABASE_URL")
-        ) ?: "jdbc:postgresql://localhost:5432/postgres"
+        ) ?: "jdbc:postgresql://localhost:5432/shop"
     ),
     val dbUser: String = firstNonBlank(
         envOrNull("DB_USER"),
+        envOrNull("DB_USERNAME"),
         envOrNull("JDBC_DATABASE_USERNAME"),
         envOrNull("POSTGRES_USER"),
         envOrNull("PGUSER")
@@ -28,7 +29,7 @@ data class AppConfig(
         envOrNull("JDBC_DATABASE_PASSWORD"),
         envOrNull("POSTGRES_PASSWORD"),
         envOrNull("PGPASSWORD")
-    ) ?: "postgres",
+    ) ?: "123522",
     val jwtSecret: String = firstNonBlank(envOrNull("JWT_SECRET"), "dev-secret")!!,
     val jwtIssuer: String = firstNonBlank(envOrNull("JWT_ISSUER"), "ktor-shop")!!,
     val jwtAudience: String = firstNonBlank(envOrNull("JWT_AUDIENCE"), "ktor-shop-users")!!,
