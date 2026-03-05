@@ -1,0 +1,86 @@
+openapi: 3.0.3
+info:
+  title: Ktor Shop API
+  version: 1.0.0
+paths:
+  /auth/register:
+    post:
+      summary: Register user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RegisterRequest'
+      responses:
+        '200':
+          description: JWT token
+  /auth/login:
+    post:
+      summary: Login user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginRequest'
+      responses:
+        '200': { description: JWT token }
+  /products:
+    get:
+      summary: List products
+      responses:
+        '200': { description: Product list }
+    post:
+      summary: Create product (admin)
+      responses:
+        '201': { description: Created }
+  /products/{id}:
+    get:
+      summary: Product details
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema: { type: integer }
+      responses:
+        '200': { description: Product }
+    put:
+      summary: Update product (admin)
+      responses:
+        '200': { description: Updated }
+    delete:
+      summary: Delete product (admin)
+      responses:
+        '204': { description: Deleted }
+  /orders:
+    post:
+      summary: Create order
+      responses:
+        '201': { description: Created }
+    get:
+      summary: User order history
+      responses:
+        '200': { description: Orders }
+  /orders/{id}:
+    delete:
+      summary: Cancel order
+      responses:
+        '204': { description: Canceled }
+  /stats/orders:
+    get:
+      summary: Admin order stats
+      responses:
+        '200': { description: Stats }
+components:
+  schemas:
+    RegisterRequest:
+      type: object
+      properties:
+        email: { type: string, example: user@example.com }
+        password: { type: string, example: secret123 }
+    LoginRequest:
+      type: object
+      properties:
+        email: { type: string }
+        password: { type: string }
