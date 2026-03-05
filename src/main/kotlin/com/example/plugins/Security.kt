@@ -6,6 +6,7 @@ import com.example.config.AppConfig
 import io.ktor.server.application.Application
 import io.ktor.server.application.install
 import io.ktor.server.auth.Authentication
+import io.ktor.server.auth.jwt.JWTPrincipal
 import io.ktor.server.auth.jwt.jwt
 
 fun Application.configureSecurity(config: AppConfig) {
@@ -19,7 +20,7 @@ fun Application.configureSecurity(config: AppConfig) {
                     .build()
             )
             validate { credential ->
-                if (credential.payload.getClaim("userId").asInt() != null) credential.payload else null
+                credential.payload.getClaim("userId").asInt()?.let { JWTPrincipal(credential.payload) }
             }
         }
     }

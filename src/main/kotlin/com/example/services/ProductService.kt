@@ -3,11 +3,13 @@ package com.example.services
 import com.example.db.Products
 import com.example.dto.ProductRequest
 import com.example.dto.ProductResponse
+import org.jetbrains.exposed.sql.ResultRow
+import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
+import org.jetbrains.exposed.sql.deleteWhere
 import org.jetbrains.exposed.sql.insert
 import org.jetbrains.exposed.sql.selectAll
 import org.jetbrains.exposed.sql.transactions.transaction
 import org.jetbrains.exposed.sql.update
-import org.jetbrains.exposed.sql.deleteWhere
 import java.time.Instant
 
 class ProductService {
@@ -16,7 +18,7 @@ class ProductService {
     }
 
     fun getById(id: Int): ProductResponse = transaction {
-        Products.select { Products.id eq id }.map(::toResponse).singleOrNull()
+        Products.selectAll().where { Products.id eq id }.map(::toResponse).singleOrNull()
             ?: throw NotFoundException("Product $id not found")
     }
 
@@ -49,7 +51,7 @@ class ProductService {
         }
     }
 
-    private fun toResponse(row: org.jetbrains.exposed.sql.ResultRow) = ProductResponse(
+    private fun toResponse(row: ResultRow) = ProductResponse(
         id = row[Products.id].value,
         name = row[Products.name],
         description = row[Products.description],
